@@ -21,13 +21,13 @@ def get_available(s3):
         obj = s3.get_object(Bucket='evenstarsites.wes', Key=file['Key'])
         data = obj['Body'].read().decode('utf-8')
         print(data)
-        data = json.loads(data)
-        coins = int(data['coins'])
-        patches = int(data['patches'])
-        total_coins += coins
-        total_patches += patches
-    num_coins = 300 - total_coins
-    num_patches = 200 - total_patches
+        #data = json.loads(data)
+        #coins = int(data['coins'])
+        #patches = int(data['patches'])
+        #total_coins += coins
+        #total_patches += patches
+    num_coins = 300 - 0 #total_coins
+    num_patches = 200 - 0 #total_patches
     return(num_coins,num_patches)
 
 def initiate_s3():
