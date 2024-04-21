@@ -50,12 +50,20 @@
             <p class="card-text">Email: {{email}}</p>
             <p class="card-text">Number of Coins: {{coins}}</p>
             <p class="card-text">Number of Patches: {{patches}}</p>
+            <p id="Total_Cost" class="card-text">Total Cost: </p>
             </div>
         </div>
     </div>
     <div class="col"></div>
 </div>
 
+<script>
+    //calculate the total cost of the order
+    var coins = {{coins}};
+    var patches = {{patches}};
+    var total_cost = coins*12 + patches*5;
+    document.getElementById("Total_Cost").innerHTML = "Total Cost: $" + total_cost;
+</script>
   
   </body>
 </html>

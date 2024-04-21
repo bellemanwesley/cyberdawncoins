@@ -64,6 +64,7 @@
                     <label for="patches">Number of Patches</label>
                     <input type="number" class="form-control" id="patches" name="patches">
                 </div>
+                <p id="Total_Cost" class="card-text">Total Cost: $0</p>
                 <div class="form-group">
                     <!--checkbox confirming that you will pay for these coins-->
                     <label for="confirm">I confirm that I will pay for these coins.</label>
@@ -82,6 +83,15 @@
     </div>
     <div class="col"></div>
 </div>
+
+<script>
+    //add a listener to the patch and coin input fields to update the total cost
+    document.getElementById("coins").addEventListener("input", function() {
+        coins = document.getElementById("coins").value;
+        total_cost = coins*12 + patches*5;
+        document.getElementById("Total_Cost").innerHTML = "Total Cost: $" + total_cost;
+    });
+</script>
 
   
   </body>
