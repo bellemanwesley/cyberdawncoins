@@ -19,4 +19,6 @@ def form(request):
             access_code = f.read().strip()
         #if access code is equal access_code, then render the form.html
         if input_value == access_code:
-            return(render(request,'form.html',{"incorrect_hidden": "false"}))
+            return(render(request,'form.html',{}))
+        else:
+            return(render(request,'home.html',{"incorrect_hidden": "false"}))
