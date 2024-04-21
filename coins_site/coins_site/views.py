@@ -1,18 +1,42 @@
 from django.shortcuts import render
+from django.shortcuts import redirect
 from django.http import HttpResponse
 from pathlib import Path
 import boto3
+import json
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 def home(request):
-	return(render(request,'home.html',{"hidden": "hidden"}))
+	return(render(request,'home.html',{"incorrect_code": "hidden","error": "hidden"}))
+
+def get_available(s3):
+    #Get a list of files in the folder cyberdawncoins which is in the bucket evenstarsites.wes
+    purchased = len(s3.list_objects(Bucket='evenstarsites.wes', Prefix='cyberdawncoins')['Contents'])
+    num_coins = 300 - purchased
+    num_patches = 200 - purchased
+    return(num_coins,num_patches)
+
+def initiate_s3():
+    #Get the AWS keys from the file
+    with open(BASE_DIR / '../../keys/aws') as f:
+        aws_keys = f.read().splitlines()
+    #The key starts at index 8
+    aws_access_key = aws_keys[0][8:].strip()
+    aws_secret_key = aws_keys[1][8:].strip()
+    s3 = boto3.client(
+        's3',
+        region_name='us-west-2',
+        aws_access_key_id=aws_access_key,
+        aws_secret_access_key=aws_secret_key
+    )
+    return(s3)
 
 def form(request):
     #If request type is get, then redirect to home
     if request.method == 'GET':
-        return render(request,'home.html',{"hidden": "hidden"})
+        return(redirect('home'))
     elif request.method == 'POST':
         #Get the value of the input field
         input_value = request.POST.get('access_code')
@@ -20,21 +44,63 @@ def form(request):
             access_code = f.read().strip()
         #if access code is equal access_code, then render the form.html
         if input_value == access_code:
-            #Get the AWS keys from the file
-            with open(BASE_DIR / '../../keys/aws') as f:
-                aws_keys = f.read().splitlines()
-            #The key starts at index 8
-            aws_access_key = aws_keys[0][8:].strip()
-            aws_secret_key = aws_keys[1][8:].strip()
-            s3 = boto3.client(
-                's3',
-                region_name='us-west-2',
-                aws_access_key_id=aws_access_key,
-                aws_secret_access_key=aws_secret_key
-            )
-            #Get a list of files in the folder cyberdawncoins which is in the bucket evenstarsites.wes
-            purchased = len(s3.list_objects(Bucket='evenstarsites.wes', Prefix='cyberdawncoins')['Contents'])
-            num_coins = 300 - purchased
-            return(render(request,'form.html',{"num_coins": num_coins}))
+            s3 = initiate_s3()
+            num_coins,num_patches = get_available(s3)
+            return(render(request,'form.html',{"num_coins": num_coins, "num_patches": num_patches}))
         else:
-            return(render(request,'home.html',{"hidden": ""}))
+            return(render(request,'home.html',{"incorrect_code": "", "error": "hidden"}))
+
+def form_submit(request):
+    #if the request method is get, then redirect to home
+    if request.method == 'GET':
+        return(redirect('home'))
+    elif request.method == 'POST':
+        #Get all of the input fields
+        #name, email, coins, patches, confirm, and access_token
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        coins = request.POST.get('coins')
+        patches = request.POST.get('patches')
+        confirm = request.POST.get('confirm')
+        access_token = request.POST.get('access_token')
+        num_coins,num_patches = get_available()
+        #first we will validate entries
+        validation = True
+        #The value of input "name" should only be letters, spaces, and hyphens
+        if not name.replace(" ", "").replace("-", "").isalpha():
+            validation = False
+        #The value of input "email" should be a valid email address
+        if not "@" in email or not "." in email:
+            validation = False
+        #The value of input "coins" should be a number between 1 and 300
+        if not coins.isdigit() or int(coins) < 1 or int(coins) > num_coins:
+            validation = False
+        #The value of input "patches" should be a number between 0 and num_patches
+        if not patches.isdigit() or int(patches) < 0 or int(patches) > num_patches:
+            validation = False
+        #The value of input "confirm" should be "on"
+        if confirm != "on":
+            validation = False
+        #The value of input "access_token" should be the same as the access code
+        with open(BASE_DIR / '../../keys/secret') as f:
+            access_code = f.read().strip()
+        if access_token != access_code:
+            validation = False
+        #If the validation is false, then render the form.html with the error message
+        if not validation:
+            return(render(request,'home.html',{"error": ""}))
+        else:
+            #Turn this data into a dictionary
+            data = {
+                "name": name,
+                "email": email,
+                "coins": coins,
+                "patches": patches
+            }
+            #Turn the dictionary into a json string
+            data_string = json.dumps(data)
+            #Put the data into the bucket cyberdawncoins in the bucket evenstarsites.wes
+            s3 = initiate_s3()
+            s3.put_object(Bucket='evenstarsites.wes', Key='cyberdawncoins/' + email, Body=data_string)
+            #Render form_submit.html
+            return(render(request,'form_submit.html',{"name": name, "email": email, "coins": coins, "patches": patches}))

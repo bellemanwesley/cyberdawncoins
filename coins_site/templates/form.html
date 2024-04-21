@@ -6,8 +6,6 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-<script src="https://apis.google.com/js/platform.js" async defer></script>
-<meta name="google-signin-client_id" content="57235927369-u5m36u69li92j4lodulg3lfcmref4gmj.apps.googleusercontent.com">
 
 <style>
   @media (min-width: 576px) {
@@ -44,10 +42,10 @@
     <div class="col">
         <div class="card bg-light">
             <div class="card-body">
-            <h5 class="card-title">Purchase Form</h5>
-            <p class="card-text">Complete the following questions to purchase Cyber Dawn coins and patches.</p>
+            <h5 class="card-title">Order Form</h5>
+            <p class="card-text">Complete the following questions to order Cyber Dawn coins and patches.</p>
             <p class="card-text">There are {{num_coins}} coins and {{num_patches}} patches still available for purchase.</p>
-            <form action="/form" method="post">
+            <form action="/form_submit" method="post">
                 <div class="form-group">
                 <label for="name">Full Name</label>
                 <input type="text" class="form-control" id="name" name="name">
@@ -63,13 +61,18 @@
                 </div>
                 <div class="form-group">
                     <!--number of coins you want to buy-->
-                    <label for="coins">Number of Patches</label>
-                    <input type="number" class="form-control" id="coins" name="coins">
+                    <label for="patches">Number of Patches</label>
+                    <input type="number" class="form-control" id="patches" name="patches">
                 </div>
                 <div class="form-group">
                     <!--checkbox confirming that you will pay for these coins-->
                     <label for="confirm">I confirm that I will pay for these coins.</label>
                     <input type="checkbox" class="form-control" id="confirm" name="confirm">
+                </div>
+                <!--reenter access code-->
+                <div class="form-group">
+                    <label for="access_code">Re-enter Access Code</label>
+                    <input type="text" class="form-control" id="access_code" name="access_code">
                 </div>
                 {% csrf_token %}
                 <button type="submit" class="btn btn-primary">Submit</button>

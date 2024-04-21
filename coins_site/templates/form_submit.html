@@ -29,7 +29,7 @@
   <br>
   <div class="row">
     <div class="col col-lg-9">
-      <h1 class="display-4 text-light">Purchase Cyber Dawn Coins and Patches</h1>
+      <h1 class="display-4 text-light">Purchase a Cyber Dawn Coin</h1>
     </div>
     <div class="col">
     </div>
@@ -38,23 +38,18 @@
 
 <div class="row">
     <div class="col"></div>
-    <!--put a box in this div which asks for an access code-->
+    <!--build a form with 5 random questions-->
     <div class="col">
         <div class="card bg-light">
             <div class="card-body">
-            <h5 class="card-title">Access Code</h5>
-            <p class="card-text">Please enter the access code provided to you by the Cyber Dawn Staff.</p>
-            <form action="/form" method="post">
-                <div class="form-group">
-                <label for="access_code">Access Code</label>
-                <input type="text" class="form-control" id="access_code" name="access_code">
-                </div>
-                {% csrf_token %}
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-            <!-- add some hidden red text saying the code is incorrect-->
-            <p style="color: red" id="incorrect_code" {{incorrect_code}}>Incorrect Access Code</p>
-            <p style="color: red" id="error" {{error}}>Something Went Wrong</p>
+            <h5 class="card-title">Thank You for Your Order!</h5>
+            <p class="card-text">Thank you for your purchase of Cyber Dawn coins and patches.</p>
+            <p class="card-text">Below is a summary of your order:</p>
+            <!--display the form data that was submitted-->
+            <p class="card-text">Name: {{name}}</p>
+            <p class="card-text">Email: {{email}}</p>
+            <p class="card-text">Number of Coins: {{coins}}</p>
+            <p class="card-text">Number of Patches: {{patches}}</p>
             </div>
         </div>
     </div>
