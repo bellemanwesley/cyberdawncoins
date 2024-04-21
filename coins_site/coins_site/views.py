@@ -62,7 +62,7 @@ def form_submit(request):
         coins = request.POST.get('coins')
         patches = request.POST.get('patches')
         confirm = request.POST.get('confirm')
-        access_token = request.POST.get('access_token')
+        access_token = request.POST.get('access_code')
         s3 = initiate_s3()
         num_coins,num_patches = get_available(s3)
         #first we will validate entries
