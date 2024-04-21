@@ -20,8 +20,7 @@ def get_available(s3):
     for file in files_list:
         obj = s3.get_object(Bucket='evenstarsites.wes', Key=file['Key'])
         data = obj['Body'].read().decode('utf-8')
-        print(data)
-        #data = json.loads(data)
+        json_data = json.loads(data)
         #coins = int(data['coins'])
         #patches = int(data['patches'])
         #total_coins += coins
