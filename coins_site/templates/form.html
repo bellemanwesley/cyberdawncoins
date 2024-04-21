@@ -45,8 +45,8 @@
         <div class="card bg-light">
             <div class="card-body">
             <h5 class="card-title">Purchase Form</h5>
-            <p class="card-text">Complete the following questions to purchase Cyber Dawn coins.</p>
-            <p class="card-text">There are {{num_coins}} coins still available for purchase.</p>
+            <p class="card-text">Complete the following questions to purchase Cyber Dawn coins and patches.</p>
+            <p class="card-text">There are {{num_coins}} coins and {{num_patches}} patches still available for purchase.</p>
             <form action="/form" method="post">
                 <div class="form-group">
                 <label for="name">Full Name</label>
@@ -60,6 +60,16 @@
                     <!--number of coins you want to buy-->
                     <label for="coins">Number of Coins</label>
                     <input type="number" class="form-control" id="coins" name="coins">
+                </div>
+                <div class="form-group">
+                    <!--number of coins you want to buy-->
+                    <label for="coins">Number of Patches</label>
+                    <input type="number" class="form-control" id="coins" name="coins">
+                </div>
+                <div class="form-group">
+                    <!--checkbox confirming that you will pay for these coins-->
+                    <label for="confirm">I confirm that I will pay for these coins.</label>
+                    <input type="checkbox" class="form-control" id="confirm" name="confirm">
                 </div>
                 {% csrf_token %}
                 <button type="submit" class="btn btn-primary">Submit</button>
