@@ -13,9 +13,20 @@ def home(request):
 
 def get_available(s3):
     #Get a list of files in the folder cyberdawncoins which is in the bucket evenstarsites.wes
-    purchased = len(s3.list_objects(Bucket='evenstarsites.wes', Prefix='cyberdawncoins')['Contents'])
-    num_coins = 300 - purchased
-    num_patches = 200 - purchased
+    files_list = s3.list_objects(Bucket='evenstarsites.wes', Prefix='cyberdawncoins')['Contents']
+    #Iterate through each file in the list and get the coins and patches
+    total_coins = 0
+    total_patches = 0
+    for file in files_list:
+        obj = s3.get_object(Bucket='evenstarsites.wes', Key=file['Key'])
+        data = obj['Body'].read().decode('utf-8')
+        data = json.loads(data)
+        coins = int(data['coins'])
+        patches = int(data['patches'])
+        total_coins += coins
+        total_patches += patches
+    num_coins = 300 - total_coins
+    num_patches = 200 - total_patches
     return(num_coins,num_patches)
 
 def initiate_s3():
