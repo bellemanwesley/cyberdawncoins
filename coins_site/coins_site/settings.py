@@ -28,6 +28,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['coins.cyberdawnexercise.com','localhost']
 
+#Add trusted origins
+CSRF_TRUSTED_ORIGINS = ['coins.cyberdawnexercise.com']
+
 
 # Application definition
 
