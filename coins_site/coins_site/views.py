@@ -24,8 +24,8 @@ def form(request):
             with open(BASE_DIR / '../../keys/aws') as f:
                 aws_keys = f.read().splitlines()
             #The key starts at index 8
-            aws_access_key = aws_keys[8:].strip()
-            aws_secret_key = aws_keys[8:].strip()
+            aws_access_key = aws_keys[0][8:].strip()
+            aws_secret_key = aws_keys[1][8:].strip()
             s3 = boto3.client(
                 's3',
                 region_name='us-west-2',
