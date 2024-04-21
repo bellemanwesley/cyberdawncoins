@@ -6,12 +6,12 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 def home(request):
-	return(render(request,'home.html',{"incorrect_hidden": "true"}))
+	return(render(request,'home.html',{"hidden": "hidden"}))
 
 def form(request):
     #If request type is get, then redirect to home
     if request.method == 'GET':
-        return render(request,'home.html',{"incorrect_hidden": "true"})
+        return render(request,'home.html',{"hidden": "hidden"})
     elif request.method == 'POST':
         #Get the value of the input field
         input_value = request.POST.get('access_code')
@@ -21,4 +21,4 @@ def form(request):
         if input_value == access_code:
             return(render(request,'form.html',{}))
         else:
-            return(render(request,'home.html',{"incorrect_hidden": "false"}))
+            return(render(request,'home.html',{"hidden": ""}))
