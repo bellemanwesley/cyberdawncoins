@@ -51,8 +51,8 @@
                 <label for="access_code">Access Code</label>
                 <input type="text" class="form-control" id="access_code" name="access_code">
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
                 {% csrf_token %}
+                <button type="submit" class="btn btn-primary">Submit</button>
             </form>
             <!-- add some hidden red text saying the code is incorrect-->
             <p style="color: red" id="incorrect_code" hidden="{{incorrect_hidden}}">Incorrect Access Code</p>
