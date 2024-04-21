@@ -56,12 +56,12 @@
                 </div>
                 <div class="form-group">
                     <!--number of coins you want to buy-->
-                    <label for="coins">Number of Coins</label>
+                    <label for="coins">Number of Coins - $12 a Piece</label>
                     <input type="number" class="form-control" id="coins" name="coins">
                 </div>
                 <div class="form-group">
                     <!--number of coins you want to buy-->
-                    <label for="patches">Number of Patches</label>
+                    <label for="patches">Number of Patches - $5 a Piece</label>
                     <input type="number" class="form-control" id="patches" name="patches">
                 </div>
                 <p id="Total_Cost" class="card-text">Total Cost: $0</p>
@@ -88,6 +88,7 @@
     //add a listener to the patch and coin input fields to update the total cost
     document.getElementById("coins").addEventListener("input", function() {
         coins = document.getElementById("coins").value;
+        patches = document.getElementById("patches").value;
         total_cost = coins*12 + patches*5;
         document.getElementById("Total_Cost").innerHTML = "Total Cost: $" + total_cost;
     });
