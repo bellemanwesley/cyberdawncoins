@@ -44,13 +44,25 @@
     <div class="col">
         <div class="card bg-light">
             <div class="card-body">
-            <h5 class="card-title">Questionnaire</h5>
-            <p class="card-text">Please answer the following questions to purchase a Cyber Dawn Coin.</p>
+            <h5 class="card-title">Purchase Form</h5>
+            <p class="card-text">Complete the following questions to purchase Cyber Dawn coins.</p>
+            <p class="card-text">There are {{num_coins}} coins still available for purchase.</p>
             <form action="/form" method="post">
                 <div class="form-group">
-                <label for="question1">What is the capital of France?</label>
-                <input type="text" class="form-control" id="question1" name="question1">
+                <label for="name">Full Name</label>
+                <input type="text" class="form-control" id="name" name="name">
                 </div>
+                <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="email">
+                </div>
+                <div class="form-group">
+                    <!--number of coins you want to buy-->
+                    <label for="coins">Number of Coins</label>
+                    <input type="number" class="form-control" id="coins" name="coins">
+                </div>
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary">Submit</button>
             </form>
             </div>
         </div>

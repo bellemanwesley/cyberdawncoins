@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from pathlib import Path
+import boto3
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -19,6 +20,21 @@ def form(request):
             access_code = f.read().strip()
         #if access code is equal access_code, then render the form.html
         if input_value == access_code:
-            return(render(request,'form.html',{}))
+            #Get the AWS keys from the file
+            with open(BASE_DIR / '../../keys/aws') as f:
+                aws_keys = f.read().splitlines()
+            #The key starts at index 8
+            aws_access_key = aws_keys[8:].strip()
+            aws_secret_key = aws_keys[8:].strip()
+            s3 = boto3.client(
+                's3',
+                region_name='us-west-2',
+                aws_access_key_id=aws_access_key,
+                aws_secret_access_key=aws_secret_key
+            )
+            #Get a list of files in the folder cyberdawncoins which is in the bucket evenstarsites.wes
+            purchased = len(s3.list_objects(Bucket='evenstarsites.wes', Prefix='cyberdawncoins')['Contents'])
+            num_coins = 300 - purchased
+            return(render(request,'form.html',{"num_coins": num_coins}))
         else:
             return(render(request,'home.html',{"hidden": ""}))
