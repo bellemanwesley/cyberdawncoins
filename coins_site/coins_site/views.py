@@ -70,26 +70,32 @@ def form_submit(request):
         #The value of input "name" should only be letters, spaces, and hyphens
         if not name.replace(" ", "").replace("-", "").isalpha():
             validation = False
+            print("Name error for:", name)
         #The value of input "email" should be a valid email address
         if not "@" in email or not "." in email:
             validation = False
+            print("Email error for:",email)
         #The value of input "coins" should be a number between 1 and 300
         if not coins.isdigit() or int(coins) < 1 or int(coins) > num_coins:
             validation = False
+            print("Coins error for:",coins)
         #The value of input "patches" should be a number between 0 and num_patches
         if not patches.isdigit() or int(patches) < 0 or int(patches) > num_patches:
             validation = False
+            print("Patches error for:",patches)
         #The value of input "confirm" should be "on"
         if confirm != "on":
             validation = False
+            print("Confirm error for:",confirm)
         #The value of input "access_token" should be the same as the access code
         with open(BASE_DIR / '../../keys/secret') as f:
             access_code = f.read().strip()
         if access_token != access_code:
             validation = False
+            print("Access token error for:",access_token)
         #If the validation is false, then render the form.html with the error message
         if not validation:
-            return(render(request,'home.html',{"error": ""}))
+            return(render(request,'home.html',{"error": "", "incorrect_code": "hidden"}))
         else:
             #Turn this data into a dictionary
             data = {
