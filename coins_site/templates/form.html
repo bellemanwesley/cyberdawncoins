@@ -87,9 +87,15 @@
 <script>
     //add a listener to the patch and coin input fields to update the total cost
     document.getElementById("coins").addEventListener("input", function() {
-        coins = document.getElementById("coins").value;
-        patches = document.getElementById("patches").value;
-        total_cost = coins*12 + patches*5;
+        let coins = parseInt(document.getElementById("coins").value) || 0;  // Default to 0 if NaN
+        let patches = parseInt(document.getElementById("patches").value) || 0;  // Default to 0 if NaN
+        let total_cost = coins * 12 + patches * 5;
+        document.getElementById("Total_Cost").innerHTML = "Total Cost: $" + total_cost;
+    });
+    document.getElementById("patches").addEventListener("input", function() {
+        let coins = parseInt(document.getElementById("coins").value) || 0;  // Default to 0 if NaN
+        let patches = parseInt(document.getElementById("patches").value) || 0;  // Default to 0 if NaN
+        let total_cost = coins * 12 + patches * 5;
         document.getElementById("Total_Cost").innerHTML = "Total Cost: $" + total_cost;
     });
 </script>
