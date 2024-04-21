@@ -17,18 +17,16 @@ def get_available(s3):
     #Iterate through each file in the list and get the coins and patches
     total_coins = 0
     total_patches = 0
-    for file in files_list:
-        print(file)
+    for file in files_list[1:]:
         obj = s3.get_object(Bucket='evenstarsites.wes', Key=file['Key'])
         data = obj['Body'].read().decode('utf-8')
-        data_string = str(data)
-        #json_data = json.loads(data_string)
-        #coins = int(data['coins'])
-        #patches = int(data['patches'])
-        #total_coins += coins
-        #total_patches += patches
-    num_coins = 300 - 0 #total_coins
-    num_patches = 200 - 0 #total_patches
+        data = json.loads(data)
+        coins = int(data['coins'])
+        patches = int(data['patches'])
+        total_coins += coins
+        total_patches += patches
+    num_coins = 300 - total_coins
+    num_patches = 200 - total_patches
     return(num_coins,num_patches)
 
 def initiate_s3():
