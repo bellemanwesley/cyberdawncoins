@@ -78,8 +78,8 @@ def form_submit(request):
         num_coins,num_patches = get_available(s3)
         #first we will validate entries
         validation = True
-        #The value of input "name" should only be letters, spaces, and hyphens
-        if not name.replace(" ", "").replace("-", "").isalpha():
+        #The value of input "name" should only be letters, spaces, hyphens, and periods
+        if not name.replace(" ", "").replace("-", "").replace(".","").isalpha():
             validation = False
             print("Name error for:", name)
         #The value of input "email" should be a valid email address
