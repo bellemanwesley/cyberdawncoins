@@ -63,7 +63,8 @@ def form_submit(request):
         patches = request.POST.get('patches')
         confirm = request.POST.get('confirm')
         access_token = request.POST.get('access_token')
-        num_coins,num_patches = get_available()
+        s3 = initiate_s3()
+        num_coins,num_patches = get_available(s3)
         #first we will validate entries
         validation = True
         #The value of input "name" should only be letters, spaces, and hyphens
