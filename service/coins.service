@@ -4,6 +4,8 @@ After=network.target
 
 [Service]
 Type=simple
+User=ubuntu
+Group=ubuntu
 ExecStart=/usr/bin/python3 /home/ubuntu/cyberdawncoins/coins_site/manage.py runserver localhost:8888
 Restart=on-failure
 RestartSec=5s
