@@ -86,8 +86,13 @@ def form_submit(request):
         if not "@" in email or not "." in email:
             validation = False
             print("Email error for:",email)
+        #If coins is null or patches is null, then set them to 0
+        if coins == "":
+            coins = "0"
+        if patches == "":
+            patches = "0"
         #The value of input "coins" should be a number between 1 and 300
-        if not coins.isdigit() or int(coins) < 1 or int(coins) > num_coins:
+        if not coins.isdigit() or int(coins) < 0 or int(coins) > num_coins:
             validation = False
             print("Coins error for:",coins)
         #The value of input "patches" should be a number between 0 and num_patches
