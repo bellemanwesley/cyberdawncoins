@@ -25,7 +25,7 @@ def get_available(s3):
         patches = int(data['patches'])
         total_coins += coins
         total_patches += patches
-    num_coins = 300 - total_coins
+    num_coins = 301 - total_coins
     num_patches = 200 - total_patches
     return(num_coins,num_patches)
 
