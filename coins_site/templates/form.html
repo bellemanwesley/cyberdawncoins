@@ -98,6 +98,11 @@
         let total_cost = coins * 12 + patches * 5;
         document.getElementById("Total_Cost").innerHTML = "Total Cost: $" + total_cost;
     });
+    //if name, email, coins, patches, or confirm aren't empty strings then replace these with the values
+    document.getElementById("name").value = "{{name}}";
+    document.getElementById("email").value = "{{email}}";
+    document.getElementById("coins").value = "{{coins}}";
+    document.getElementById("patches").value = "{{patches}}";
 </script>
 
   

@@ -25,7 +25,7 @@ def get_available(s3):
         patches = int(data['patches'])
         total_coins += coins
         total_patches += patches
-    num_coins = 301 - total_coins
+    num_coins = 300 - total_coins
     num_patches = 200 - total_patches
     return(num_coins,num_patches)
 
@@ -51,13 +51,25 @@ def form(request):
     elif request.method == 'POST':
         #Get the value of the input field
         input_value = request.POST.get('access_code')
+        #Get email too
+        email = request.POST.get('email')
         with open(BASE_DIR / '../../keys/secret') as f:
             access_code = f.read().strip()
         #if access code is equal access_code, then render the form.html
         if input_value == access_code:
             s3 = initiate_s3()
             num_coins,num_patches = get_available(s3)
-            return(render(request,'form.html',{"num_coins": num_coins, "num_patches": num_patches}))
+            #See if the email is in the bucket
+            try:
+                obj = s3.get_object(Bucket='evenstarsites.wes', Key='cyberdawncoins/' + email)
+                data = obj['Body'].read().decode('utf-8')
+                data = json.loads(data)
+                coins = data['coins']
+                patches = data['patches']
+                name = data['name']
+                return(render(request,'form.html',{"email": email, "num_coins": num_coins, "num_patches": num_patches, "coins": coins, "patches": patches, "name": name}))
+            except:
+                return(render(request,'form.html',{"email": email, "num_coins": num_coins, "num_patches": num_patches}))
         else:
             return(render(request,'home.html',{"incorrect_code": "", "error": "hidden"}))
 
