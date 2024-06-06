@@ -91,7 +91,7 @@
         let patches = parseInt(document.getElementById("patches").value) || 0;  // Default to 0 if NaN
         let max_coins = parseInt({{num_coins}}) || 0;
         let current_coins = parseInt({{coins}}) || 0;
-        if coins > max_coins + current_coins) {
+        if (coins > max_coins + current_coins) {
               alert("You have entered a value higher than the number of coins available");
               document.getElementById("coins").value = current_coins;
         }
@@ -106,7 +106,7 @@
         let patches = parseInt(document.getElementById("patches").value) || 0;  // Default to 0 if NaN
         let max_patches = parseInt({{num_patches}}) || 0;
         let current_patches = parseInt({{patches}}) || 0;
-        if patches > max_patches + current_patches) {
+        if (patches > max_patches + current_patches) {
               alert("You have entered a value higher than the number of patches available");
               document.getElementById("patches").value = current_patches;
         }
