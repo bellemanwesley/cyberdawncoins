@@ -82,8 +82,13 @@ def admin_pay(request):
     data_string = json.dumps(data)
     #Put the data back into the bucket
     s3.put_object(Bucket='evenstarsites.wes', Key='cyberdawncoins/' + email, Body=data_string)
+    #Get the admin page passcode
+    with open(BASE_DIR / '../../keys/passcode') as f:
+        passcode = f.read().strip()
     #Redirect to the admin page
-    return(redirect('admin'))
+    #Have the post data in the redirect with the passcode
+    return(redirect('admin',{"passcode": passcode}))
+    
 
 def admin_fulfill(request):
     #If the request method is get, then redirect to home
@@ -109,8 +114,12 @@ def admin_fulfill(request):
     data_string = json.dumps(data)
     #Put the data back into the bucket
     s3.put_object(Bucket='evenstarsites.wes', Key='cyberdawncoins/' + email, Body=data_string)
+    #Get the admin page passcode
+    with open(BASE_DIR / '../../keys/passcode') as f:
+        passcode = f.read().strip()
     #Redirect to the admin page
-    return(redirect('admin'))
+    #Have the post data in the redirect with the passcode
+    return(redirect('admin',{"passcode": passcode}))
 
 def get_available(s3):
     #Get a list of files in the folder cyberdawncoins which is in the bucket evenstarsites.wes
