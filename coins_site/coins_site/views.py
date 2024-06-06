@@ -12,17 +12,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 def home(request):
 	return(render(request,'home.html',{"incorrect_code": "hidden","error": "hidden"}))
 
-def admin(request):
-    #If the request method is get, then redirect to home
-    if request.method == 'GET':
-        return(redirect('home'))
-    #Get the passcode in the post request
-    passcode = request.POST.get('passcode')
-    #If the passcode is not equal to the passcode in the file, then redirect to home
-    with open(BASE_DIR / '../../keys/passcode') as f:
-        correct_passcode = f.read().strip()
-    if passcode != correct_passcode:
-        return(redirect('home'))
+def load_admin():
     #Initiate items list
     items = []
     #Get a list of files in the folder cyberdawncoins which is in the bucket evenstarsites.wes
@@ -55,6 +45,22 @@ def admin(request):
     admin_validation = os.urandom(16).hex()
     #Store the random string as a system environment variable
     os.environ['admin_validation'] = admin_validation
+    #Return items and admin_validation
+    return(items,admin_validation)
+
+def admin(request):
+    #If the request method is get, then redirect to home
+    if request.method == 'GET':
+        return(redirect('home'))
+    #Get the passcode in the post request
+    passcode = request.POST.get('passcode')
+    #If the passcode is not equal to the passcode in the file, then redirect to home
+    with open(BASE_DIR / '../../keys/passcode') as f:
+        correct_passcode = f.read().strip()
+    if passcode != correct_passcode:
+        return(redirect('home'))
+    #Get the items and admin_validation
+    items,admin_validation = load_admin()
     #Return the admin page
     return(render(request,'admin.html',{"items": items, "admin_validation": admin_validation}))
 
@@ -82,12 +88,10 @@ def admin_pay(request):
     data_string = json.dumps(data)
     #Put the data back into the bucket
     s3.put_object(Bucket='evenstarsites.wes', Key='cyberdawncoins/' + email, Body=data_string)
-    #Get the admin page passcode
-    with open(BASE_DIR / '../../keys/passcode') as f:
-        passcode = f.read().strip()
-    #Redirect to the admin page
-    #Have the post data in the redirect with the passcode
-    return(redirect('admin',{"passcode": passcode}))
+    #Set items and admin_validation
+    items,admin_validation = load_admin()
+    #Return the admin page
+    return(render(request,'admin.html',{"items": items, "admin_validation": admin_validation}))
     
 
 def admin_fulfill(request):
@@ -114,12 +118,10 @@ def admin_fulfill(request):
     data_string = json.dumps(data)
     #Put the data back into the bucket
     s3.put_object(Bucket='evenstarsites.wes', Key='cyberdawncoins/' + email, Body=data_string)
-    #Get the admin page passcode
-    with open(BASE_DIR / '../../keys/passcode') as f:
-        passcode = f.read().strip()
-    #Redirect to the admin page
-    #Have the post data in the redirect with the passcode
-    return(redirect('admin',{"passcode": passcode}))
+    #Set items and admin_validation
+    items,admin_validation = load_admin()
+    #Return the admin page
+    return(render(request,'admin.html',{"items": items, "admin_validation": admin_validation}))
 
 def get_available(s3):
     #Get a list of files in the folder cyberdawncoins which is in the bucket evenstarsites.wes
