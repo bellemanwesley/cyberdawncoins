@@ -11,6 +11,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 def home(request):
 	return(render(request,'home.html',{"incorrect_code": "hidden","error": "hidden"}))
 
+def admin(request):
+    #Return the admin page
+    return(render(request,'admin.html',{}))
+
 def get_available(s3):
     #Get a list of files in the folder cyberdawncoins which is in the bucket evenstarsites.wes
     files_list = s3.list_objects(Bucket='evenstarsites.wes', Prefix='cyberdawncoins')['Contents']
