@@ -43,8 +43,8 @@ def admin(request):
         #See if fulfilled is in the data, if not, then set it to false
         if "fulfilled" not in data:
             data["fulfilled"] = False
-        #If not paid and not fulfilled, then add the data to the items list
-        if not data["paid"] and not data["fulfilled"]:
+        #If not paid or not fulfilled, then add the data to the items list
+        if not data["paid"] or not data["fulfilled"]:
             #Change paid to "Yes" or "No"
             if data["paid"]:
                 data["paid"] = "Yes"
