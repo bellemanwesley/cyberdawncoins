@@ -12,6 +12,16 @@ def home(request):
 	return(render(request,'home.html',{"incorrect_code": "hidden","error": "hidden"}))
 
 def admin(request):
+    #If the request method is get, then redirect to home
+    if request.method == 'GET':
+        return(redirect('home'))
+    #Get the passcode in the post request
+    passcode = request.POST.get('passcode')
+    #If the passcode is not equal to the passcode in the file, then redirect to home
+    with open(BASE_DIR / '../../keys/passcode') as f:
+        correct_passcode = f.read().strip()
+    if passcode != correct_passcode:
+        return(redirect('home'))
     #Initiate items list
     items = []
     #Get a list of files in the folder cyberdawncoins which is in the bucket evenstarsites.wes
