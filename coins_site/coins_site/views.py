@@ -85,6 +85,10 @@ def admin_pay(request):
     #Redirect to the admin page
     return(redirect('admin'))
 
+def admin_fulfill(request):
+    #Return admin page
+    return(redirect('admin'))
+
 def get_available(s3):
     #Get a list of files in the folder cyberdawncoins which is in the bucket evenstarsites.wes
     files_list = s3.list_objects(Bucket='evenstarsites.wes', Prefix='cyberdawncoins')['Contents']
