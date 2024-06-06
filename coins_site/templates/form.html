@@ -87,12 +87,12 @@
 <script>
     //add a listener to the patch and coin input fields to update the total cost
     document.getElementById("coins").addEventListener("input", function() {
-        if (parseInt(document.getElementById("coins").value) > parseInt({{num_coins}}) + parseInt({{coins}})) {
+        let coins = parseInt(document.getElementById("coins").value) || 0;  // Default to 0 if NaN
+        let patches = parseInt(document.getElementById("patches").value) || 0;  // Default to 0 if NaN
+        if (parseInt(document.getElementById("coins").value) > parseInt({{num_coins}}) + coins) {
               alert("You have entered a value higher than the number of coins available");
               document.getElementById("coins").value = {{coins}};
         }
-        let coins = parseInt(document.getElementById("coins").value) || 0;  // Default to 0 if NaN
-        let patches = parseInt(document.getElementById("patches").value) || 0;  // Default to 0 if NaN
         let total_cost = coins * 12 + patches * 5;
         document.getElementById("Total_Cost").innerHTML = "Total Cost: $" + total_cost;
         //If the user inputs a value for coins higher than the number of coins available
@@ -100,12 +100,12 @@
         //Then set the value of coins to zero
     });
     document.getElementById("patches").addEventListener("input", function() {
-        if (parseInt(document.getElementById("patches").value) > parseInt({{num_patches}}) + parseInt({{patches}})) {
+        let coins = parseInt(document.getElementById("coins").value) || 0;  // Default to 0 if NaN
+        let patches = parseInt(document.getElementById("patches").value) || 0;  // Default to 0 if NaN
+        if (parseInt(document.getElementById("patches").value) > parseInt({{num_patches}}) + patches) {
               alert("You have entered a value higher than the number of patches available");
               document.getElementById("patches").value = {{patches}};
         }
-        let coins = parseInt(document.getElementById("coins").value) || 0;  // Default to 0 if NaN
-        let patches = parseInt(document.getElementById("patches").value) || 0;  // Default to 0 if NaN
         let total_cost = coins * 12 + patches * 5;
         document.getElementById("Total_Cost").innerHTML = "Total Cost: $" + total_cost;
         //If the user inputs a value for patches higher than the number of patches available
