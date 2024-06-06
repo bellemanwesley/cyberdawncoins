@@ -41,8 +41,10 @@ def load_admin():
             else:
                 data["paid"] = "No"
             items.append(data) 
+    #Generate a random string from system entropy
+    admin_validation = os.urandom(16).hex()
     #Store the random string as a system environment variable
-    os.environ['admin_validation'] = os.urandom(16).hex()
+    os.environ['admin_validation'] = admin_validation
     #Return items and admin_validation
     return(items,admin_validation)
 
