@@ -18,7 +18,7 @@
 </style>
 
 <body style="background-color: gainsboro;">
-<title> Buy Cyber Dawn Coins </title>
+<title> Manage Inventory </title>
 
 <div class="jumbotron container-fluid bg-dark">
   <div class="row">
@@ -29,15 +29,19 @@
   <br>
   <div class="row">
     <div class="col col-lg-9">
-      <h1 class="display-4 text-light">Purchase Cyber Dawn Coins and Patches</h1>
+      <h1 class="display-4 text-light">Manage Inventory</h1>
     </div>
     <div class="col">
     </div>
   </div>
 </div>
 
+<div class="container-fluid">
+    {% for item in items %}
+    <div class = "row">
+        {{ item.name }}
+    </div>
 
 
-  
   </body>
 </html>

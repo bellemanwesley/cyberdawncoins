@@ -12,8 +12,24 @@ def home(request):
 	return(render(request,'home.html',{"incorrect_code": "hidden","error": "hidden"}))
 
 def admin(request):
+    #Initiate items list
+    items = []
+    #Get a list of files in the folder cyberdawncoins which is in the bucket evenstarsites.wes
+    s3 = initiate_s3()
+    files_list = s3.list_objects(Bucket='evenstarsites.wes', Prefix='cyberdawncoins')['Contents']
+    #Iterate through each file in the list
+    for file in files_list[1:]:
+        obj = s3.get_object(Bucket='evenstarsites.wes', Key=file['Key'])
+        data = obj['Body'].read().decode('utf-8')
+        data = json.loads(data)
+        coins = int(data['coins'])
+        patches = int(data['patches'])
+        cost = 12*coins + 5*patches
+        data["cost"] = cost
+        items.append(data) 
+
     #Return the admin page
-    return(render(request,'admin.html',{}))
+    return(render(request,'admin.html',{"items": items}))
 
 def get_available(s3):
     #Get a list of files in the folder cyberdawncoins which is in the bucket evenstarsites.wes
