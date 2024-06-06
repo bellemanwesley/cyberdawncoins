@@ -86,7 +86,30 @@ def admin_pay(request):
     return(redirect('admin'))
 
 def admin_fulfill(request):
-    #Return admin page
+    #If the request method is get, then redirect to home
+    if request.method == 'GET':
+        return(redirect('home'))
+    #Get validation from the post request
+    validation = request.POST.get('validation')
+    #Get the admin validation from the system environment variable
+    admin_validation = os.environ['admin_validation']
+    #If the validation is not equal to the admin validation, then redirect to home
+    if validation != admin_validation:
+        return(redirect('home'))
+    #Get the email from the post request
+    email = request.POST.get('email')
+    #Get the s3 file with the email as the key
+    s3 = initiate_s3()
+    obj = s3.get_object(Bucket='evenstarsites.wes', Key='cyberdawncoins/' + email)
+    data = obj['Body'].read().decode('utf-8')
+    data = json.loads(data)
+    #Set fulfilled to true
+    data["fulfilled"] = True
+    #Turn the data into a json string
+    data_string = json.dumps(data)
+    #Put the data back into the bucket
+    s3.put_object(Bucket='evenstarsites.wes', Key='cyberdawncoins/' + email, Body=data_string)
+    #Redirect to the admin page
     return(redirect('admin'))
 
 def get_available(s3):
