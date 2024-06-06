@@ -44,23 +44,23 @@
         </div>
         <div class = "card-body">
             <div class = "row">
-                <div class="col-6">
+                <div class="col-8">
                     Coins: {{ item.coins }} &nbsp Patches: {{ item.patches }} &nbsp Cost: ${{ item.cost }} &nbsp Paid: {{ item.paid }}
                 </div>
-                <div class="col-3">
+                <div class="col-2">
                     <form action="/admin_paid" method="post">
                         {% csrf_token %}
                         <input type="hidden" name="validation" value="{{ admin_validation }}">
                         <input type="hidden" name="email" value="{{ item.email }}">
-                        <button type="submit" class="btn btn-primary">Pay</button>
+                        <button type="submit" class="btn btn-primary btn-block">Pay</button>
                     </form>
                 </div>
-                <div class="col-3">
+                <div class="col-2">
                     <form action="/admin_fulfill" method="post">
                         {% csrf_token %}
                         <input type="hidden" name="validation" value="{{ admin_validation }}">
                         <input type="hidden" name="email" value="{{ item.email }}">
-                        <button type="submit" class="btn btn-primary">Fulfill</button>
+                        <button type="submit" class="btn btn-primary btn-block">Fulfill</button>
                     </form>
                 </div>
             </div>
