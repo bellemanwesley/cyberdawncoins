@@ -94,7 +94,7 @@
         //If the user inputs a value for coins higher than the number of coins available
         //Have a pop up that says "You have entered a value higher than the number of coins available"
         //Then set the value of coins to zero
-        if (parseInt(document.getElementById("coins").value) > parseInt({{num_coins}}) + parseInt({{coins}}) {
+        if (parseInt(document.getElementById("coins").value) > parseInt({{num_coins}}) + parseInt({{coins}})) {
             alert("You have entered a value higher than the number of coins available");
             document.getElementById("coins").value = {{coins}};
         }
@@ -107,7 +107,7 @@
         //If the user inputs a value for patches higher than the number of patches available
         //Have a pop up that says "You have entered a value higher than the number of patches available"
         //Then set the value of patches to zero
-        if (parseInt(document.getElementById("patches").value) > parseInt({{num_patches}}) + parseInt({{patches}}) {
+        if (parseInt(document.getElementById("patches").value) > parseInt({{num_patches}}) + parseInt({{patches}})) {
             alert("You have entered a value higher than the number of patches available");
             document.getElementById("patches").value = {{patches}};
         }
