@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from pathlib import Path
 import boto3
 import json
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -36,10 +37,26 @@ def admin(request):
         patches = int(data['patches'])
         cost = 12*coins + 5*patches
         data["cost"] = cost
-        items.append(data) 
-
+        #See if "paid is in the data, if not, then set it to false"
+        if "paid" not in data:
+            data["paid"] = False
+        #See if fulfilled is in the data, if not, then set it to false
+        if "fulfilled" not in data:
+            data["fulfilled"] = False
+        #If not paid and not fulfilled, then add the data to the items list
+        if not data["paid"] and not data["fulfilled"]:
+            #Change paid to "Yes" or "No"
+            if data["paid"]:
+                data["paid"] = "Yes"
+            else:
+                data["paid"] = "No"
+            items.append(data) 
+    #Generate a random string from system entropy
+    admin_validation = os.urandom(16).hex()
+    #Store the random string as a system environment variable
+    os.environ['admin_validation'] = admin_validation
     #Return the admin page
-    return(render(request,'admin.html',{"items": items}))
+    return(render(request,'admin.html',{"items": items, "admin_validation": admin_validation}))
 
 def get_available(s3):
     #Get a list of files in the folder cyberdawncoins which is in the bucket evenstarsites.wes
