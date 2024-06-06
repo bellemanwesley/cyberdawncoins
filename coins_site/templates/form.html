@@ -94,6 +94,7 @@
         if (coins > max_coins + current_coins) {
               alert("You have entered a value higher than the number of coins available");
               document.getElementById("coins").value = current_coins;
+              coins = current_coins;
         }
         let total_cost = coins * 12 + patches * 5;
         document.getElementById("Total_Cost").innerHTML = "Total Cost: $" + total_cost;
@@ -109,6 +110,7 @@
         if (patches > max_patches + current_patches) {
               alert("You have entered a value higher than the number of patches available");
               document.getElementById("patches").value = current_patches;
+              patches = current_patches;
         }
         let total_cost = coins * 12 + patches * 5;
         document.getElementById("Total_Cost").innerHTML = "Total Cost: $" + total_cost;
