@@ -44,6 +44,18 @@
         </div>
         <div class = "card-body">
             Coins: {{ item.coins }} &nbsp Patches: {{ item.patches }} &nbsp Cost: ${{ item.cost }} &nbsp Paid: {{ item.paid }}
+            <form action="/admin_paid" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="validation" value="{{ admin_validation }}">
+                <input type="hidden" name="email" value="{{ item.email }}">
+                <button type="submit" class="btn btn-primary">Pay</button>
+            </form>
+            <form action="/admin_fulfill" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="validation" value="{{ admin_validation }}">
+                <input type="hidden" name="email" value="{{ item.email }}">
+                <button type="submit" class="btn btn-primary">Fulfill</button>
+            </form>
         </div>
     </div>
     <br>
