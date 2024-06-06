@@ -48,7 +48,7 @@
                     Coins: {{ item.coins }} &nbsp Patches: {{ item.patches }} &nbsp Cost: ${{ item.cost }} &nbsp Paid: {{ item.paid }}
                 </div>
                 <div class="col-2">
-                    <form action="/admin_paid" method="post">
+                    <form action="/admin_pay" method="post">
                         {% csrf_token %}
                         <input type="hidden" name="validation" value="{{ admin_validation }}">
                         <input type="hidden" name="email" value="{{ item.email }}">
