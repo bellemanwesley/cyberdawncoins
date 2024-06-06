@@ -90,9 +90,10 @@
         let coins = parseInt(document.getElementById("coins").value) || 0;  // Default to 0 if NaN
         let patches = parseInt(document.getElementById("patches").value) || 0;  // Default to 0 if NaN
         let max_coins = parseInt({{num_coins}}) || 0;
-        if (parseInt(document.getElementById("coins").value) > max_coins + coins) {
+        let current_coins = parseInt({{coins}}) || 0;
+        if coins > max_coins + current_coins) {
               alert("You have entered a value higher than the number of coins available");
-              document.getElementById("coins").value = parseInt({{coins}}) || 0;
+              document.getElementById("coins").value = current_coins;
         }
         let total_cost = coins * 12 + patches * 5;
         document.getElementById("Total_Cost").innerHTML = "Total Cost: $" + total_cost;
@@ -104,9 +105,10 @@
         let coins = parseInt(document.getElementById("coins").value) || 0;  // Default to 0 if NaN
         let patches = parseInt(document.getElementById("patches").value) || 0;  // Default to 0 if NaN
         let max_patches = parseInt({{num_patches}}) || 0;
-        if (parseInt(document.getElementById("patches").value) > max_patches + patches) {
+        let current_patches = parseInt({{patches}}) || 0;
+        if patches > max_patches + current_patches) {
               alert("You have entered a value higher than the number of patches available");
-              document.getElementById("patches").value = parseInt({{patches}}) || 0;
+              document.getElementById("patches").value = current_patches;
         }
         let total_cost = coins * 12 + patches * 5;
         document.getElementById("Total_Cost").innerHTML = "Total Cost: $" + total_cost;
