@@ -32,6 +32,15 @@
       <h1 class="display-4 text-light">Purchase Cyber Dawn Coins and Patches</h1>
     </div>
     <div class="col">
+      <form action="/admin" method="post">
+        <!--Password for admin access-->
+        <div class="form-group">
+          <label for="passcode">Passcode</label>
+          <input type="password" class="form-control" id="passcode" name="passcode">
+        </div>        
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary">Admin</button>
+      </form>
     </div>
   </div>
 </div>
