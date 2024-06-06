@@ -91,12 +91,26 @@
         let patches = parseInt(document.getElementById("patches").value) || 0;  // Default to 0 if NaN
         let total_cost = coins * 12 + patches * 5;
         document.getElementById("Total_Cost").innerHTML = "Total Cost: $" + total_cost;
+        //If the user inputs a value for coins higher than the number of coins available
+        //Have a pop up that says "You have entered a value higher than the number of coins available"
+        //Then set the value of coins to zero
+        if (parseInt(document.getElementById("coins").value) > parseInt({{num_coins}})) {
+            alert("You have entered a value higher than the number of coins available");
+            document.getElementById("coins").value = 0;
+        }
     });
     document.getElementById("patches").addEventListener("input", function() {
         let coins = parseInt(document.getElementById("coins").value) || 0;  // Default to 0 if NaN
         let patches = parseInt(document.getElementById("patches").value) || 0;  // Default to 0 if NaN
         let total_cost = coins * 12 + patches * 5;
         document.getElementById("Total_Cost").innerHTML = "Total Cost: $" + total_cost;
+        //If the user inputs a value for patches higher than the number of patches available
+        //Have a pop up that says "You have entered a value higher than the number of patches available"
+        //Then set the value of patches to zero
+        if (parseInt(document.getElementById("patches").value) > parseInt({{num_patches}})) {
+            alert("You have entered a value higher than the number of patches available");
+            document.getElementById("patches").value = 0;
+        }
     });
     //if name, email, coins, patches, or confirm aren't empty strings then replace these with the values
     document.getElementById("name").value = "{{name}}";
@@ -104,13 +118,7 @@
     document.getElementById("coins").value = "{{coins}}";
     document.getElementById("patches").value = "{{patches}}";
 
-    //If the user inputs a value for coins higher than the number of coins available
-    //Have a pop up that says "You have entered a value higher than the number of coins available"
-    //Then set the value of coins to zero
-    if (parseInt(document.getElementById("coins").value) > parseInt({{num_coins}})) {
-        alert("You have entered a value higher than the number of coins available");
-        document.getElementById("coins").value = 0;
-    }
+
     //If the user inputs a value for patches higher than the number of patches available
     //Have a pop up that says "You have entered a value higher than the number of patches available"
     //Then set the value of patches to zero
