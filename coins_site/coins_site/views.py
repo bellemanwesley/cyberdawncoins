@@ -190,6 +190,9 @@ def form_submit(request):
     if request.method == 'GET':
         return(redirect('home'))
     elif request.method == 'POST':
+        #Get the value of the access code
+        with open(BASE_DIR / '../../keys/secret') as f:
+            access_code = f.read().strip()
         #Get all of the input fields
         #name, email, coins, patches, confirm, and access_token
         name = request.POST.get('name')
@@ -198,8 +201,20 @@ def form_submit(request):
         patches = request.POST.get('patches')
         confirm = request.POST.get('confirm')
         access_token = request.POST.get('access_code')
-        s3 = initiate_s3()
-        num_coins,num_patches = get_available(s3)
+        #if access code is equal access_code
+        if access_token == access_code:
+            s3 = initiate_s3()
+            num_coins,num_patches = get_available(s3)
+            #See if the email is in the bucket
+            try:
+                obj = s3.get_object(Bucket='evenstarsites.wes', Key='cyberdawncoins/' + email)
+                data = obj['Body'].read().decode('utf-8')
+                data = json.loads(data)
+                current_coins = int(data['coins'])
+                current_patches = int(data['patches'])
+            except:
+                current_coins = 0
+                current_patches = 0
         #first we will validate entries
         validation = True
         #The value of input "name" should only be letters, spaces, hyphens, and periods
@@ -215,12 +230,12 @@ def form_submit(request):
             coins = "0"
         if patches == "":
             patches = "0"
-        #The value of input "coins" should be a number between 1 and 300
-        if not coins.isdigit() or int(coins) < 0 or int(coins) > num_coins:
+        #The value of input "coins" should be a number between 0 and num_coins plus current coins
+        if not coins.isdigit() or int(coins) < 0 or int(coins) > num_coins + current_coins:
             validation = False
             print("Coins error for:",coins)
         #The value of input "patches" should be a number between 0 and num_patches
-        if not patches.isdigit() or int(patches) < 0 or int(patches) > num_patches:
+        if not patches.isdigit() or int(patches) < 0 or int(patches) > num_patches + current_patches:
             validation = False
             print("Patches error for:",patches)
         #The value of input "confirm" should be "on"
@@ -228,8 +243,6 @@ def form_submit(request):
             validation = False
             print("Confirm error for:",confirm)
         #The value of input "access_token" should be the same as the access code
-        with open(BASE_DIR / '../../keys/secret') as f:
-            access_code = f.read().strip()
         if access_token != access_code:
             validation = False
             print("Access token error for:",access_token)
