@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<!-- bootstrap links -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+<style>
+  @media (min-width: 576px) {
+  .jumbotron {
+    padding-bottom: 2%;
+    padding-top: 2%;
+    
+  }
+}
+</style>
+
+<body style="background-color: gainsboro;">
+<title> Buy Cyber Dawn Coins </title>
+
+<div class="jumbotron container-fluid bg-dark">
+  <div class="row">
+    <div class="col col-lg-9"></div>
+    <div class="col"></div>
+    <div class="col"></div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col col-lg-9">
+      <h1 class="display-4 text-light">Purchase Cyber Dawn Coins and Patches</h1>
+    </div>
+    <div class="col">
+      <form action="/admin" method="post">
+        <!--Password for admin access-->
+        <div class="form-group">
+          <label for="passcode">Passcode</label>
+          <input type="password" class="form-control" id="passcode" name="passcode">
+        </div>        
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary">Admin</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+    <div class="col"></div>
+    <!--put a box in this div which asks for an access code-->
+    <div class="col">
+        <h1 class="display-4 text-dark">Coins and Patches Are Sold Out</h1>
+    </div>
+    <div class="col"></div>
+</div>
+
+  
+  </body>
+</html>

@@ -19,8 +19,8 @@ from . import views
 
 urlpatterns = [
     path('', views.home, name='home'),
-    path('form', views.form, name='form'),
-    path('form_submit', views.form_submit, name='form_submit'),
+    #path('form', views.form, name='form'),
+    #path('form_submit', views.form_submit, name='form_submit'),
     path('admin', views.admin, name='admin'),
     path('admin_pay', views.admin_pay, name='admin_pay'),
     path('admin_fulfill', views.admin_fulfill, name='admin_fulfill')

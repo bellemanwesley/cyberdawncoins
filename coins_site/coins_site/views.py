@@ -10,7 +10,8 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 def home(request):
-	return(render(request,'home.html',{"incorrect_code": "hidden","error": "hidden"}))
+	#return(render(request,'home.html',{"incorrect_code": "hidden","error": "hidden"}))
+    return(render(request,'sold_out.html',{}))
 
 def load_admin():
     #Initiate items list
