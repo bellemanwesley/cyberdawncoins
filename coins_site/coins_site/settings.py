@@ -24,7 +24,7 @@ with open(BASE_DIR / '../../keys/django') as f:
     SECRET_KEY = f.read().strip()
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['coins.cyberdawnexercise.com','localhost']
 
